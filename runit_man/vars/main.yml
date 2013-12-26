@@ -1,0 +1,9 @@
+---
+runit_man:
+  version: "latest"
+  use_multiuser_rvm: false
+  port: 14500
+  users: []
+  mode: 'rw' # set to "ro" to run in readonly mode.
+  logger: 'svlogd'
+  files: []

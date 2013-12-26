@@ -1,0 +1,35 @@
+---
+- name: servers configuration
+  hosts: facsite_servers
+  user: $user
+  sudo: yes
+
+  roles:
+    - common
+    - rbenv
+    - redis
+    - postgresql
+
+- name: Install Prod specific software
+  hosts: facsite_production
+  user: root
+
+  roles:
+    - role: bennojoy.nginx
+      nginx_max_clients: 512
+      nginx_http_params:
+        sendfile: "on"
+        tcp_nopush: "on"
+        tcp_nodelay: "on"
+        keepalive_timeout: "65"
+        access_log: "/var/log/nginx/access.log"
+        error_log: "/var/log/nginx/error.log"
+      nginx_sites: none
+
+- name: Install FacSite app
+  hosts: facsite_servers
+  user: $user
+  sudo: yes
+
+  roles:
+    - facsite_app_setup

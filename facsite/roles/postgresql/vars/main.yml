@@ -1,0 +1,11 @@
+postgresql:
+  version: 9.2
+  encoding: 'UTF-8'
+  locale: 'en_US.UTF-8'
+
+  user: facsite
+  password: mysupersecretpassword
+
+  production_name: facsite_production
+  development_name: facsite_development
+  test_name: facsite_test

@@ -1,0 +1,9 @@
+[facsite_servers:children]
+facsite_vm
+facsite_production
+
+[facsite_vm]
+192.168.111.111 nickname=local branch=develop vm=1 user=vagrant
+
+[facsite_production]
+176.9.30.8 nickname=production branch=master vm=0 user=root

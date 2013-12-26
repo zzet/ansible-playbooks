@@ -1,0 +1,8 @@
+- name: runit-man | setup gem {{ item }}
+  gem: name={{ item }} state=latest
+  with_items:
+    - runit-man
+    - rainbows
+    - sendfile
+  notify:
+    - run runit-man

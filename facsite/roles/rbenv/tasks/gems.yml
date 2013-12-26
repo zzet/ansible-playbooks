@@ -1,0 +1,3 @@
+- name: rbenv | install {{ item }} gem
+  gem: name={{ item }} # Check state=present
+  ignore_errors: True

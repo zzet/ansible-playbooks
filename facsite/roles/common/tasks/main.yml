@@ -1,0 +1,41 @@
+---
+- name: common | ensure apt cache is up to date
+  apt: update_cache=yes
+
+- name: common | make sure the system encoding is utf-8
+  sudo: yes
+  template: src=locale dest=/etc/default/locale
+            owner=root group=root mode=644
+
+- name: common | install useful pkgs
+  apt: pkg={{ item }}
+  with_items:
+    - curl
+    - vim
+    - git
+    - runit
+    - htop
+    - atop
+    - imagemagick
+    - python-pycurl
+  sudo: yes
+
+- name: common | checks if resolver is working properly (issues with some VBox/Host OS combinations)
+  action: command host -t A ansible.cc
+  register: ns
+  ignore_errors: yes
+
+- name: common | pushes new resolver configuration is resolver fails
+  action: lineinfile regexp="^nameserver " line="nameserver 8.8.8.8" dest=/etc/resolv.conf
+  when: ns|failed
+
+- name: common | checks if resolver is working properly with new nameserver
+  action: command host -t A ansible.cc
+
+- name: app_setup | Create apps users path
+  file: state=directory path=/rest
+  sudo: yes
+
+- name: app_setup | Create apps users path
+  file: state=directory path=/rest/u
+  sudo: yes
